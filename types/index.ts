@@ -38,6 +38,11 @@ export interface Applicant {
   /** Related Job record (every applicant is tied to a real job posting) */
   jobId?: string;
   job?: { id: string; title: string; slug: string };
+  noticePeriod?: string;
+  preferredLocation?: string;
+  currentLocation?: string;
+  currentCtc?: string;
+  expectedCtc?: string;
 }
 
 export interface ApplicantFormData {
@@ -52,6 +57,11 @@ export interface ApplicantFormData {
   notes?: string;
   source: string;
   resumeFileName?: string;
+  noticePeriod?: string;
+  preferredLocation?: string;
+  currentLocation?: string;
+  currentCtc?: string;
+  expectedCtc?: string;
 }
 
 // ─── Job / Dynamic Application Link Module ───────────────────
@@ -86,6 +96,8 @@ export interface Job {
   applicantCount?: number;
   createdAt: string;
   updatedAt: string;
+  createdBy?: string | null;
+  createdByUser?: { id: string; name: string; email: string; avatarUrl?: string | null } | null;
 }
 
 export interface JobFormData {
@@ -128,6 +140,11 @@ export interface JobApplicationFormData {
   skills?: string;
   notes?: string;
   resumeFileName?: string;
+  noticePeriod?: string;
+  preferredLocation?: string;
+  currentLocation?: string;
+  currentCtc?: string;
+  expectedCtc?: string;
 }
 
 export interface Paginated<T> {
@@ -196,6 +213,7 @@ export interface FilterParams {
   search?: string;
   status?: string;
   position?: string;
+  noticePeriod?: string;
   dateFrom?: string;
   dateTo?: string;
   sortBy?: string;

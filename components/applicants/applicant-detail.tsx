@@ -24,6 +24,7 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { SkillTag } from "@/components/shared/skill-tag";
 import { Applicant } from "@/types";
 import { formatDateTime, getInitials } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api";
 
 interface ApplicantDetailProps {
   applicant: Applicant | null;
@@ -136,9 +137,9 @@ export function ApplicantDetail({
                 <div className="flex items-center gap-3">
                   <UserSquare2 className="h-4 w-4 text-muted-foreground" />
                   {applicant.resumeFileName ? (
-                    <span className="text-sm">
-                      Resume: <span className="font-medium">{applicant.resumeFileName}</span>
-                    </span>
+                    <a href={`${API_BASE_URL}/applicants/${applicant.id}/resume`} target="_blank" rel="noreferrer" className="text-sm text-primary hover:underline">
+                      View resume: <span className="font-medium">{applicant.resumeFileName}</span>
+                    </a>
                   ) : (
                     <span className="text-sm text-muted-foreground">
                       No resume uploaded
@@ -146,6 +147,8 @@ export function ApplicantDetail({
                   )}
                 </div>
               </div>
+
+              <div><h3 className="text-sm font-semibold mb-2">Availability & compensation</h3><div className="grid grid-cols-2 gap-3 rounded-xl bg-muted/30 p-4 text-sm"><div><p className="text-xs text-muted-foreground">Notice period</p><p>{applicant.noticePeriod || "—"}</p></div><div><p className="text-xs text-muted-foreground">Current location</p><p>{applicant.currentLocation || "—"}</p></div><div><p className="text-xs text-muted-foreground">Preferred location</p><p>{applicant.preferredLocation || "—"}</p></div><div><p className="text-xs text-muted-foreground">Current / expected CTC</p><p>{applicant.currentCtc || "—"} / {applicant.expectedCtc || "—"}</p></div></div></div>
 
               {/* Skills */}
               <div>

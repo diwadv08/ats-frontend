@@ -29,13 +29,18 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const email = formData.email.trim().toLowerCase();
+    if (!email || !formData.password) {
+      toast.error("Enter your email address and password.");
+      return;
+    }
     setIsLoading(true);
     try {
-      const session = await api.post<{ accessToken: string; user: { role: string } }>("/auth/signin", formData);
+      const session = await api.post<{ accessToken: string; user: { role: string } }>("/auth/signin", { email, password: formData.password });
       localStorage.setItem("ats_access_token", session.accessToken);
       localStorage.setItem("ats_user", JSON.stringify(session.user));
       toast.success("Welcome back!", { description: `Signed in as ${session.user.role.replaceAll("_", " ")}.` });
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (error) {
       toast.error(error instanceof ApiError ? error.message : "Unable to sign in. Please try again.");
     } finally {
@@ -146,6 +151,7 @@ export default function LoginPage() {
                 </label>
                 <Input
                   type="email"
+                  autoComplete="email"
                   placeholder="you@company.com"
                   icon={<Mail className="h-4 w-4" />}
                   value={formData.email}
@@ -168,6 +174,7 @@ export default function LoginPage() {
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
                     placeholder="Enter your password"
                     icon={<Lock className="h-4 w-4" />}
                     value={formData.password}
@@ -178,6 +185,7 @@ export default function LoginPage() {
                   />
                   <button
                     type="button"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
                   >
@@ -194,6 +202,7 @@ export default function LoginPage() {
                 type="submit"
                 className="h-12 w-full text-base font-semibold"
                 isLoading={isLoading}
+                disabled={isLoading || !formData.email.trim() || !formData.password}
               >
                 Open Dashboard
                 <ArrowRight className="h-4 w-4" />

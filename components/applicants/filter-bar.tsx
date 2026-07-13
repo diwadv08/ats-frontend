@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { APPLICATION_STATUS_OPTIONS, POSITION_OPTIONS } from "@/lib/constants";
+import { APPLICATION_STATUS_OPTIONS, NOTICE_PERIOD_OPTIONS, POSITION_OPTIONS } from "@/lib/constants";
 import { FilterParams, Applicant } from "@/types";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ExportDialog } from "@/components/applicants/export-dialog";
@@ -75,6 +75,7 @@ export function FilterBar({
       page: 1,
     });
   };
+  const handleNoticePeriodChange = (value: string) => onFilterChange({ ...filters, noticePeriod: value === "all" ? undefined : value, page: 1 });
 
   const clearFilters = () => {
     setSearchValue("");
@@ -82,7 +83,7 @@ export function FilterBar({
   };
 
   const hasActiveFilters =
-    filters.search || filters.status || filters.position;
+    filters.search || filters.status || filters.position || filters.noticePeriod;
 
   const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -142,7 +143,7 @@ export function FilterBar({
             Filters
             {hasActiveFilters && (
               <span className="ml-1.5 h-5 w-5 rounded-full bg-emerald-500 text-[10px] font-bold text-white flex items-center justify-center">
-                {[filters.search, filters.status, filters.position].filter(Boolean).length}
+                {[filters.search, filters.status, filters.position, filters.noticePeriod].filter(Boolean).length}
               </span>
             )}
           </Button>
@@ -228,6 +229,14 @@ export function FilterBar({
             </Select>
           </div>
 
+          <div className="w-full sm:w-48">
+            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Notice period</label>
+            <Select value={filters.noticePeriod || "all"} onValueChange={handleNoticePeriodChange}>
+              <SelectTrigger><SelectValue placeholder="All notice periods" /></SelectTrigger>
+              <SelectContent><SelectItem value="all">All notice periods</SelectItem>{NOTICE_PERIOD_OPTIONS.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+
           {hasActiveFilters && (
             <div className="flex items-end">
               <Button
@@ -275,6 +284,7 @@ export function FilterBar({
               </button>
             </span>
           )}
+          {filters.noticePeriod && <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 text-sky-700 dark:text-sky-300 px-3 py-1 text-xs font-medium">Notice: {filters.noticePeriod}<button onClick={() => onFilterChange({ ...filters, noticePeriod: undefined })}><X className="h-3 w-3 hover:text-sky-500" /></button></span>}
         </motion.div>
       )}
 

@@ -60,7 +60,7 @@ export function JobCard({ job, index = 0, onEdit, onDelete }: JobCardProps) {
           <Users className="h-3.5 w-3.5" /> {job.applicantCount ?? 0} applicant
           {(job.applicantCount ?? 0) === 1 ? "" : "s"}
         </span>
-        <span>Posted {formatDate(job.createdAt)}</span>
+        <span>Posted by {job.createdByUser?.name || "Unknown"} · {formatDate(job.createdAt)}</span>
       </div>
 
       <div className="border-t border-border/50 pt-3">

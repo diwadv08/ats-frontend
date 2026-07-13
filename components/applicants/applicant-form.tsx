@@ -34,6 +34,8 @@ import {
   RESUME_STATUS_OPTIONS,
   POSITION_OPTIONS,
   SOURCE_OPTIONS,
+  NOTICE_PERIOD_OPTIONS,
+  CTC_OPTIONS,
 } from "@/lib/constants";
 
 const formSchema = z.object({
@@ -57,6 +59,11 @@ const formSchema = z.object({
     "withdrawn",
   ]),
   source: z.string().min(1, "Source is required"),
+  noticePeriod: z.string().optional(),
+  preferredLocation: z.string().optional(),
+  currentLocation: z.string().optional(),
+  currentCtc: z.string().optional(),
+  expectedCtc: z.string().optional(),
   notes: z.string().optional(),
 });
 
@@ -97,6 +104,11 @@ export function ApplicantForm({
       resumeStatus: "pending",
       applicationStatus: "new",
       source: "",
+      noticePeriod: "",
+      preferredLocation: "",
+      currentLocation: "",
+      currentCtc: "",
+      expectedCtc: "",
       notes: "",
     },
   });
@@ -113,6 +125,11 @@ export function ApplicantForm({
         resumeStatus: applicant.resumeStatus,
         applicationStatus: applicant.applicationStatus,
         source: applicant.source,
+        noticePeriod: applicant.noticePeriod || "",
+        preferredLocation: applicant.preferredLocation || "",
+        currentLocation: applicant.currentLocation || "",
+        currentCtc: applicant.currentCtc || "",
+        expectedCtc: applicant.expectedCtc || "",
         notes: applicant.notes || "",
       });
       setResumeFileName(applicant.resumeFileName);
@@ -248,6 +265,14 @@ export function ApplicantForm({
                 "Recruiter" if sourced by a recruiter.
               </p>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2"><label className="text-sm font-medium">Notice period</label><Select value={watch("noticePeriod") || "unspecified"} onValueChange={(v) => setValue("noticePeriod", v === "unspecified" ? "" : v)}><SelectTrigger><SelectValue placeholder="Select notice period" /></SelectTrigger><SelectContent><SelectItem value="unspecified">Not specified</SelectItem>{NOTICE_PERIOD_OPTIONS.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectContent></Select></div>
+            <div className="space-y-2"><label className="text-sm font-medium">Preferred location</label><Input {...register("preferredLocation")} placeholder="Bengaluru, remote..." /></div>
+            <div className="space-y-2"><label className="text-sm font-medium">Current location</label><Input {...register("currentLocation")} placeholder="Current city" /></div>
+            <div className="space-y-2"><label className="text-sm font-medium">Current CTC</label><Select value={watch("currentCtc") || "unspecified"} onValueChange={(v) => setValue("currentCtc", v === "unspecified" ? "" : v)}><SelectTrigger><SelectValue placeholder="Select current CTC" /></SelectTrigger><SelectContent><SelectItem value="unspecified">Not specified</SelectItem>{CTC_OPTIONS.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectContent></Select></div>
+            <div className="space-y-2"><label className="text-sm font-medium">Expected CTC</label><Select value={watch("expectedCtc") || "unspecified"} onValueChange={(v) => setValue("expectedCtc", v === "unspecified" ? "" : v)}><SelectTrigger><SelectValue placeholder="Select expected CTC" /></SelectTrigger><SelectContent><SelectItem value="unspecified">Not specified</SelectItem>{CTC_OPTIONS.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectContent></Select></div>
           </div>
 
           <div className="space-y-2">

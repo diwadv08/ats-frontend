@@ -28,5 +28,10 @@ export function normalizeApplicant(raw: any): Applicant {
     resumeFileName: raw.resumeFileName || undefined,
     jobId: raw.jobId,
     job: raw.job,
+    noticePeriod: raw.noticePeriod || undefined,
+    preferredLocation: raw.preferredLocation || undefined,
+    currentLocation: raw.currentLocation || undefined,
+    currentCtc: raw.currentCtc || undefined,
+    expectedCtc: raw.expectedCtc || undefined,
   };
 }

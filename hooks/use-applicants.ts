@@ -57,6 +57,7 @@ export function useApplicants(initialFilters?: FilterParams): UseApplicantsRetur
         search: filters.search,
         status: filters.status ? toApiEnum(filters.status) : undefined,
         position: filters.position,
+        noticePeriod: filters.noticePeriod,
         sortBy: filters.sortBy,
         sortOrder: filters.sortOrder,
         page: pagination.page,
@@ -119,6 +120,11 @@ export function useApplicants(initialFilters?: FilterParams): UseApplicantsRetur
     source: data.source,
     notes: data.notes,
     resumeFileName: data.resumeFileName,
+    noticePeriod: data.noticePeriod,
+    preferredLocation: data.preferredLocation,
+    currentLocation: data.currentLocation,
+    currentCtc: data.currentCtc,
+    expectedCtc: data.expectedCtc,
   });
 
   const createApplicant = useCallback(async (data: ApplicantFormData) => {

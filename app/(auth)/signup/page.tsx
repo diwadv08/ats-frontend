@@ -41,13 +41,13 @@ export default function SignupPage() {
   const handleNext = () => {
     if (
       step === 1 &&
-      (!formData.firstName || !formData.lastName || !formData.email)
+      (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim())
     ) {
       toast.error("Please fill in all fields");
       return;
     }
 
-    if (step === 2 && (!formData.company || !formData.role)) {
+    if (step === 2 && (!formData.company.trim() || !formData.role.trim())) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -73,13 +73,13 @@ export default function SignupPage() {
     setIsLoading(true);
     try {
       const session = await api.post<{ accessToken: string; user: { role: string } }>("/auth/signup", {
-        name: `${formData.firstName} ${formData.lastName}`.trim(), email: formData.email,
+        name: `${formData.firstName} ${formData.lastName}`.trim(), email: formData.email.trim().toLowerCase(),
         password: formData.password, department: `${formData.company} — ${formData.role}`,
       });
       localStorage.setItem("ats_access_token", session.accessToken);
       localStorage.setItem("ats_user", JSON.stringify(session.user));
       toast.success("Account created!", { description: "Your hiring workspace is ready." });
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (error) {
       toast.error(error instanceof ApiError ? error.message : "Unable to create your account.");
     } finally {
@@ -231,6 +231,7 @@ export default function SignupPage() {
                         <label className="text-sm font-medium">Email</label>
                         <Input
                           type="email"
+                          autoComplete="email"
                           placeholder="john@company.com"
                           icon={<Mail className="h-4 w-4" />}
                           value={formData.email}
@@ -280,6 +281,7 @@ export default function SignupPage() {
                           <div className="relative">
                             <Input
                               type={showPassword ? "text" : "password"}
+                              autoComplete="new-password"
                               placeholder="Min. 8 characters"
                               icon={<Lock className="h-4 w-4" />}
                               value={formData.password}
@@ -293,6 +295,7 @@ export default function SignupPage() {
                             />
                             <button
                               type="button"
+                              aria-label={showPassword ? "Hide password" : "Show password"}
                               onClick={() => setShowPassword(!showPassword)}
                               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                             >
@@ -310,6 +313,7 @@ export default function SignupPage() {
                           </label>
                           <Input
                             type={showPassword ? "text" : "password"}
+                            autoComplete="new-password"
                             placeholder="Repeat password"
                             icon={<Lock className="h-4 w-4" />}
                             value={formData.confirmPassword}

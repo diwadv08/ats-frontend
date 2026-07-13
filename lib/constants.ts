@@ -104,3 +104,22 @@ export const SIDEBAR_ITEMS = [
   { label: "Reports", href: "#", icon: "BarChart3" },
   { label: "Settings", href: "/settings", icon: "Settings" },
 ];
+
+export const NOTICE_PERIOD_OPTIONS = [
+  "Immediate",
+  "15 Days",
+  "30 Days",
+  "45 Days",
+  "60 Days",
+  "90 Days",
+];
+
+export const CTC_OPTIONS = [
+  "Under 3 LPA",
+  "3 - 6 LPA",
+  "6 - 10 LPA",
+  "10 - 15 LPA",
+  "15 - 25 LPA",
+  "25 - 40 LPA",
+  "40+ LPA",
+];

@@ -36,6 +36,7 @@ import { SkillTag } from "@/components/shared/skill-tag";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Applicant } from "@/types";
 import { formatDate, getInitials, cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api";
 import { ITEMS_PER_PAGE_OPTIONS } from "@/lib/constants";
 
 interface ApplicantTableProps {
@@ -132,6 +133,9 @@ export function ApplicantTable({
                 <SortableHeader field="experience">Exp.</SortableHeader>
               </TableHead>
               <TableHead>Skills</TableHead>
+              <TableHead>Notice</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead>CTC</TableHead>
               <TableHead>Source</TableHead>
               <TableHead>Resume</TableHead>
               <TableHead>
@@ -164,6 +168,9 @@ export function ApplicantTable({
                     </div>
                   </div>
                 </TableCell>
+                <TableCell><span className="text-sm">{applicant.noticePeriod || "—"}</span></TableCell>
+                <TableCell><div className="text-xs"><p>{applicant.currentLocation || "—"}</p><p className="text-muted-foreground">Pref: {applicant.preferredLocation || "—"}</p></div></TableCell>
+                <TableCell><div className="text-xs"><p>Current: {applicant.currentCtc || "—"}</p><p className="text-muted-foreground">Expected: {applicant.expectedCtc || "—"}</p></div></TableCell>
                 <TableCell>
                   <span className="text-sm">{applicant.position}</span>
                 </TableCell>
@@ -203,12 +210,12 @@ export function ApplicantTable({
                 </TableCell>
                 <TableCell>
                   {applicant.resumeFileName ? (
-                    <span className="inline-flex items-center gap-1.5 text-xs text-foreground">
+                    <a href={`${API_BASE_URL}/applicants/${applicant.id}/resume`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline">
                       <FileText className="h-3.5 w-3.5 text-primary" />
                       <span className="max-w-[120px] truncate">
                         {applicant.resumeFileName}
                       </span>
-                    </span>
+                    </a>
                   ) : (
                     <span className="text-xs text-muted-foreground">—</span>
                   )}
