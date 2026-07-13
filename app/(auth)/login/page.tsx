@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { api, ApiError } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,13 +30,17 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 650));
-
-    toast.success("Welcome back!", {
-      description: "Opening your hiring dashboard...",
-    });
-
-    setTimeout(() => router.push("/dashboard"), 450);
+    try {
+      const session = await api.post<{ accessToken: string; user: { role: string } }>("/auth/signin", formData);
+      localStorage.setItem("ats_access_token", session.accessToken);
+      localStorage.setItem("ats_user", JSON.stringify(session.user));
+      toast.success("Welcome back!", { description: `Signed in as ${session.user.role.replaceAll("_", " ")}.` });
+      router.push("/dashboard");
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : "Unable to sign in. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const boardItems = [
@@ -196,7 +201,7 @@ export default function LoginPage() {
             </motion.form>
 
             <div className="mt-6 rounded-xl border border-border/60 bg-muted/34 p-4 text-center text-xs text-muted-foreground">
-              Demo mode accepts any email and password.
+              Use your workspace account to access the hiring console.
             </div>
 
             <p className="mt-8 text-center text-sm text-muted-foreground">

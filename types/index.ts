@@ -186,6 +186,12 @@ export interface UserProfile {
   department: string;
 }
 
+export type UserRole = "SUPER_ADMIN" | "ADMIN" | "RECRUITER" | "INTERVIEWER" | "MANAGER";
+export interface WorkspaceUser {
+  id: string; name: string; email: string; role: UserRole; department?: string | null;
+  avatarUrl?: string | null; createdAt: string;
+}
+
 export interface FilterParams {
   search?: string;
   status?: string;

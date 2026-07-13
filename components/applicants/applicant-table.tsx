@@ -7,12 +7,10 @@
 
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ChevronUp,
   ChevronDown,
-  MoreHorizontal,
   Eye,
   Pencil,
   Trash2,
@@ -72,7 +70,6 @@ export function ApplicantTable({
   sortOrder,
   onSort,
 }: ApplicantTableProps) {
-  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const SortIcon = ({ field }: { field: string }) => {
     if (sortBy !== field)
@@ -221,55 +218,7 @@ export function ApplicantTable({
                     {formatDate(applicant.appliedDate)}
                   </span>
                 </TableCell>
-                <TableCell>
-                  <div className="relative">
-                    <button
-                      onClick={() =>
-                        setOpenMenuId(
-                          openMenuId === applicant.id ? null : applicant.id
-                        )
-                      }
-                      className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-muted transition-colors"
-                    >
-                      <MoreHorizontal className="h-4 w-4" />
-                    </button>
-                    {openMenuId === applicant.id && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="absolute right-0 top-full mt-1 w-36 glass-card1 rounded-xl border border-border/50 overflow-hidden z-50"
-                      >
-                        <button
-                          onClick={() => {
-                            onView(applicant);
-                            setOpenMenuId(null);
-                          }}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-muted/50 transition-colors"
-                        >
-                          <Eye className="h-3.5 w-3.5" /> View
-                        </button>
-                        <button
-                          onClick={() => {
-                            onEdit(applicant);
-                            setOpenMenuId(null);
-                          }}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-muted/50 transition-colors"
-                        >
-                          <Pencil className="h-3.5 w-3.5" /> Edit
-                        </button>
-                        <button
-                          onClick={() => {
-                            onDelete(applicant);
-                            setOpenMenuId(null);
-                          }}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-sm text-rose-500 hover:bg-rose-500/10 transition-colors"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" /> Delete
-                        </button>
-                      </motion.div>
-                    )}
-                  </div>
-                </TableCell>
+                <TableCell><div className="flex items-center gap-1"><button title="View" onClick={() => onView(applicant)} className="rounded-lg p-2 hover:bg-muted"><Eye className="h-4 w-4" /></button><button title="Edit" onClick={() => onEdit(applicant)} className="rounded-lg p-2 hover:bg-muted"><Pencil className="h-4 w-4" /></button><button title="Delete" onClick={() => onDelete(applicant)} className="rounded-lg p-2 text-rose-500 hover:bg-rose-500/10"><Trash2 className="h-4 w-4" /></button></div></TableCell>
               </motion.tr>
             ))}
           </TableBody>

@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { api, ApiError } from "@/lib/api";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -70,13 +71,20 @@ export default function SignupPage() {
     }
 
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 750));
-
-    toast.success("Account created!", {
-      description: "Opening your RD ATS workspace...",
-    });
-
-    setTimeout(() => router.push("/dashboard"), 550);
+    try {
+      const session = await api.post<{ accessToken: string; user: { role: string } }>("/auth/signup", {
+        name: `${formData.firstName} ${formData.lastName}`.trim(), email: formData.email,
+        password: formData.password, department: `${formData.company} — ${formData.role}`,
+      });
+      localStorage.setItem("ats_access_token", session.accessToken);
+      localStorage.setItem("ats_user", JSON.stringify(session.user));
+      toast.success("Account created!", { description: "Your hiring workspace is ready." });
+      router.push("/dashboard");
+    } catch (error) {
+      toast.error(error instanceof ApiError ? error.message : "Unable to create your account.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const steps = [
@@ -250,9 +258,9 @@ export default function SignupPage() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Job title</label>
+                        <label className="text-sm font-medium">Department</label>
                         <Input
-                          placeholder="HR Manager"
+                          placeholder="People Operations"
                           icon={<Briefcase className="h-4 w-4" />}
                           value={formData.role}
                           onChange={(e) =>

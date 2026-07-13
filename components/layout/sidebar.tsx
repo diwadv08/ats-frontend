@@ -7,7 +7,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -46,6 +46,22 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
+  const [role, setRole] = useState<string>("");
+
+  useEffect(() => {
+    try { setRole(JSON.parse(localStorage.getItem("ats_user") || "{}").role || ""); } catch { setRole(""); }
+  }, []);
+  const visibleItems = SIDEBAR_ITEMS.filter((item) => {
+    if (item.href === "/users") return role === "SUPER_ADMIN" || role === "ADMIN";
+    if (role === "INTERVIEWER") return ["/dashboard", "/jobs", "/applicants", "/settings"].includes(item.href);
+    return true;
+  });
+
+  const signOut = () => {
+    localStorage.removeItem("ats_access_token");
+    localStorage.removeItem("ats_user");
+    window.location.assign("/login");
+  };
 
   return (
     <motion.aside
@@ -88,7 +104,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-        {SIDEBAR_ITEMS.map((item, index) => {
+        {visibleItems.map((item, index) => {
           const Icon = iconMap[item.icon] || LayoutDashboard;
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           const isDisabled = item.href === "#";
@@ -148,7 +164,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       {/* Bottom section */}
       <div className="border-t border-border/50 p-3">
-        <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-rose-500 transition-colors group">
+        <button onClick={signOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-rose-500 transition-colors group">
           <LogOut className="h-5 w-5 shrink-0" />
           <AnimatePresence>
             {!collapsed && (

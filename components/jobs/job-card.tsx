@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MapPin, Users, MoreVertical, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Users, Eye, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Job } from "@/types";
 import { EMPLOYMENT_TYPE_OPTIONS, JOB_STATUS_OPTIONS } from "@/lib/constants";
@@ -25,7 +24,6 @@ interface JobCardProps {
 }
 
 export function JobCard({ job, index = 0, onEdit, onDelete }: JobCardProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const employmentLabel =
     EMPLOYMENT_TYPE_OPTIONS.find((o) => o.value === job.employmentType)?.label ||
     job.employmentType;
@@ -47,39 +45,7 @@ export function JobCard({ job, index = 0, onEdit, onDelete }: JobCardProps) {
             {job.department || "General"} {job.location ? `· ${job.location}` : ""}
           </p>
         </div>
-        <div className="relative shrink-0">
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-muted transition-colors"
-          >
-            <MoreVertical className="h-4 w-4" />
-          </button>
-          {menuOpen && (
-            <div
-              className="absolute right-0 top-9 z-20 w-36 rounded-lg border border-border/50 bg-popover shadow-[var(--shadow-md)] py-1"
-              onMouseLeave={() => setMenuOpen(false)}
-            >
-              <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onEdit(job);
-                }}
-                className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-muted"
-              >
-                <Pencil className="h-3.5 w-3.5" /> Edit
-              </button>
-              <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onDelete(job);
-                }}
-                className="flex w-full items-center gap-2 px-3 py-2 text-sm text-rose-500 hover:bg-muted"
-              >
-                <Trash2 className="h-3.5 w-3.5" /> Delete
-              </button>
-            </div>
-          )}
-        </div>
+        <div className="flex shrink-0 gap-1"><Link title="View" href={`/jobs/${job.id}`} className="rounded-lg p-2 hover:bg-muted"><Eye className="h-4 w-4" /></Link><button title="Edit" onClick={() => onEdit(job)} className="rounded-lg p-2 hover:bg-muted"><Pencil className="h-4 w-4" /></button><button title="Delete" onClick={() => onDelete(job)} className="rounded-lg p-2 text-rose-500 hover:bg-rose-500/10"><Trash2 className="h-4 w-4" /></button></div>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

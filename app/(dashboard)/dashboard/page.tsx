@@ -2,7 +2,7 @@
  * ─────────────────────────────────────────────────────────────
  * RD ATS Admin — Dashboard Page
  * KPIs, charts, and activity feed rendered from the live API
- * (NestJS + PostgreSQL + Redis) — no mock/sample data.
+ * (NestJS + PostgreSQL) — no mock/sample data.
  * ─────────────────────────────────────────────────────────────
  */
 

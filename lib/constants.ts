@@ -68,7 +68,6 @@ export const SKILL_OPTIONS = [
   "GraphQL",
   "PostgreSQL",
   "MongoDB",
-  "Redis",
   "Next.js",
   "Tailwind CSS",
   "Figma",
@@ -101,7 +100,7 @@ export const SIDEBAR_ITEMS = [
   { label: "Applicants", href: "/applicants", icon: "Users" },
   { label: "Interviews", href: "#", icon: "Calendar" },
   { label: "Offers", href: "#", icon: "FileText" },
-  { label: "Team", href: "#", icon: "UserCog" },
+  { label: "Users", href: "/users", icon: "UserCog" },
   { label: "Reports", href: "#", icon: "BarChart3" },
-  { label: "Settings", href: "#", icon: "Settings" },
+  { label: "Settings", href: "/settings", icon: "Settings" },
 ];

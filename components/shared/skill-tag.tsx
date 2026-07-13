@@ -23,7 +23,6 @@ const skillColors: Record<string, string> = {
   GraphQL: "bg-pink-100 text-pink-800 dark:bg-pink-500/20 dark:text-pink-300",
   PostgreSQL: "bg-teal-100 text-teal-800 dark:bg-teal-500/20 dark:text-teal-300",
   MongoDB: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300",
-  Redis: "bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-300",
   "Next.js": "bg-gray-100 text-gray-800 dark:bg-gray-500/20 dark:text-gray-300",
   "Tailwind CSS": "bg-sky-100 text-sky-800 dark:bg-sky-500/20 dark:text-sky-300",
   Figma: "bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-300",
