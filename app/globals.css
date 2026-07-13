@@ -1,0 +1,511 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 33% 98%;
+    --foreground: 222 43% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 43% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 43% 9%;
+    /* Default palette: Violet Gold — overridden per-theme below via [data-color-theme] */
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 214 32% 93%;
+    --muted-foreground: 218 16% 43%;
+    --accent: 38 95% 54%;
+    --accent-foreground: 24 40% 12%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 218 27% 86%;
+    --input: 218 27% 88%;
+    --ring: 262 83% 58%;
+    --radius: 0.875rem;
+    --surface: 0 0% 100%;
+    --surface-raised: 0 0% 100%;
+    --surface-glass: 0 0% 100%;
+    --shadow-color: 218 48% 18%;
+    --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+    --shadow-sm: 0 8px 20px -16px hsl(var(--shadow-color) / 0.25);
+    --shadow-md: 0 18px 42px -28px hsl(var(--shadow-color) / 0.36);
+    --shadow-lg: 0 28px 70px -36px hsl(var(--shadow-color) / 0.46);
+    --shadow-glow: 0 16px 44px hsl(var(--primary) / 0.18);
+    --space-page: clamp(1rem, 2.4vw, 2.25rem);
+    --space-card: clamp(1rem, 1.8vw, 1.5rem);
+    --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Chart palette — used by every chart widget so they re-theme with the rest of the app */
+    --chart-1: 262 83% 58%;
+    --chart-2: 38 95% 54%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 330 81% 60%;
+    --chart-5: 172 66% 40%;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222 39% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 39% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 263 85% 68%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 217 91% 68%;
+    --secondary-foreground: 222 47% 6%;
+    --muted: 220 28% 15%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 38 92% 58%;
+    --accent-foreground: 24 40% 10%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 26% 18%;
+    --input: 220 26% 19%;
+    --ring: 263 85% 68%;
+    --surface: 222 39% 9%;
+    --surface-raised: 222 34% 12%;
+    --surface-glass: 222 34% 12%;
+    --shadow-color: 0 0% 0%;
+    --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.3);
+    --shadow-sm: 0 10px 24px -18px hsl(var(--shadow-color) / 0.75);
+    --shadow-md: 0 22px 54px -30px hsl(var(--shadow-color) / 0.9);
+    --shadow-lg: 0 34px 82px -38px hsl(var(--shadow-color) / 0.95);
+    --shadow-glow: 0 18px 50px hsl(var(--primary) / 0.2);
+    --chart-1: 263 85% 68%;
+    --chart-2: 38 92% 58%;
+    --chart-3: 199 89% 58%;
+    --chart-4: 330 81% 68%;
+    --chart-5: 172 66% 50%;
+  }
+
+  /* ───────────────────────────────────────────────────────────
+     Multi-color theme presets
+     Setting data-color-theme on <html> (see ColorThemeProvider)
+     overrides the palette everywhere, in both light and dark mode.
+     ─────────────────────────────────────────────────────────── */
+
+  /* Violet Gold (explicit block for the default, so re-selecting it works identically to the others) */
+  [data-color-theme="violet"] {
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 38 95% 54%;
+    --accent-foreground: 24 40% 12%;
+    --ring: 262 83% 58%;
+    --chart-1: 262 83% 58%;
+    --chart-2: 38 95% 54%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 330 81% 60%;
+    --chart-5: 172 66% 40%;
+  }
+  .dark[data-color-theme="violet"] {
+    --primary: 263 85% 68%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 217 91% 68%;
+    --secondary-foreground: 222 47% 6%;
+    --accent: 38 92% 58%;
+    --accent-foreground: 24 40% 10%;
+    --ring: 263 85% 68%;
+    --chart-1: 263 85% 68%;
+    --chart-2: 38 92% 58%;
+    --chart-3: 199 89% 58%;
+    --chart-4: 330 81% 68%;
+    --chart-5: 172 66% 50%;
+  }
+
+  /* Emerald — the original launch palette, kept as an option */
+  [data-color-theme="emerald"] {
+    --primary: 168 78% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 231 58% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 27 92% 55%;
+    --accent-foreground: 222 43% 9%;
+    --ring: 168 78% 36%;
+    --chart-1: 168 78% 36%;
+    --chart-2: 231 58% 55%;
+    --chart-3: 27 92% 55%;
+    --chart-4: 330 81% 60%;
+    --chart-5: 199 89% 48%;
+  }
+  .dark[data-color-theme="emerald"] {
+    --primary: 168 74% 46%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 231 78% 70%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 27 92% 58%;
+    --accent-foreground: 222 47% 6%;
+    --ring: 168 74% 46%;
+    --chart-1: 168 74% 46%;
+    --chart-2: 231 78% 70%;
+    --chart-3: 27 92% 58%;
+    --chart-4: 330 81% 68%;
+    --chart-5: 199 89% 58%;
+  }
+
+  /* Ocean Blue */
+  [data-color-theme="ocean"] {
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 60% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 172 66% 40%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 199 89% 48%;
+    --chart-1: 199 89% 48%;
+    --chart-2: 262 60% 60%;
+    --chart-3: 172 66% 40%;
+    --chart-4: 38 92% 54%;
+    --chart-5: 330 81% 60%;
+  }
+  .dark[data-color-theme="ocean"] {
+    --primary: 199 89% 58%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 262 65% 68%;
+    --secondary-foreground: 222 47% 6%;
+    --accent: 172 66% 48%;
+    --accent-foreground: 222 47% 6%;
+    --ring: 199 89% 58%;
+    --chart-1: 199 89% 58%;
+    --chart-2: 262 65% 68%;
+    --chart-3: 172 66% 48%;
+    --chart-4: 38 92% 58%;
+    --chart-5: 330 81% 68%;
+  }
+
+  /* Sunset Coral */
+  [data-color-theme="sunset"] {
+    --primary: 14 90% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 340 82% 58%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 24 40% 12%;
+    --ring: 14 90% 55%;
+    --chart-1: 14 90% 55%;
+    --chart-2: 340 82% 58%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 172 66% 40%;
+    --chart-5: 262 60% 60%;
+  }
+  .dark[data-color-theme="sunset"] {
+    --primary: 14 90% 62%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 340 82% 66%;
+    --secondary-foreground: 222 47% 6%;
+    --accent: 38 92% 56%;
+    --accent-foreground: 24 40% 10%;
+    --ring: 14 90% 62%;
+    --chart-1: 14 90% 62%;
+    --chart-2: 340 82% 66%;
+    --chart-3: 38 92% 56%;
+    --chart-4: 172 66% 50%;
+    --chart-5: 262 65% 68%;
+  }
+
+  /* Crimson Rose */
+  [data-color-theme="crimson"] {
+    --primary: 350 78% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 60% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 24 90% 55%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 350 78% 52%;
+    --chart-1: 350 78% 52%;
+    --chart-2: 262 60% 55%;
+    --chart-3: 24 90% 55%;
+    --chart-4: 38 92% 54%;
+    --chart-5: 199 89% 48%;
+  }
+  .dark[data-color-theme="crimson"] {
+    --primary: 350 78% 60%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 262 65% 65%;
+    --secondary-foreground: 222 47% 6%;
+    --accent: 24 90% 60%;
+    --accent-foreground: 222 47% 6%;
+    --ring: 350 78% 60%;
+    --chart-1: 350 78% 60%;
+    --chart-2: 262 65% 65%;
+    --chart-3: 24 90% 60%;
+    --chart-4: 38 92% 58%;
+    --chart-5: 199 89% 58%;
+  }
+
+  /* Midnight Indigo */
+  [data-color-theme="midnight"] {
+    --primary: 231 70% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 89% 48%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 262 60% 58%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 231 70% 55%;
+    --chart-1: 231 70% 55%;
+    --chart-2: 199 89% 48%;
+    --chart-3: 262 60% 58%;
+    --chart-4: 38 92% 54%;
+    --chart-5: 330 81% 60%;
+  }
+  .dark[data-color-theme="midnight"] {
+    --primary: 231 78% 66%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 199 89% 58%;
+    --secondary-foreground: 222 47% 6%;
+    --accent: 262 65% 68%;
+    --accent-foreground: 222 47% 6%;
+    --ring: 231 78% 66%;
+    --chart-1: 231 78% 66%;
+    --chart-2: 199 89% 58%;
+    --chart-3: 262 65% 68%;
+    --chart-4: 38 92% 58%;
+    --chart-5: 330 81% 68%;
+  }
+
+  [data-color-theme="royal"] {
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 20% 55%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 188 95% 43%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 221 83% 53%;
+  --chart-1: 221 83% 53%;
+  --chart-2: 215 20% 55%;
+  --chart-3: 188 95% 43%;
+  --chart-4: 262 60% 60%;
+  --chart-5: 38 92% 54%;
+}
+
+.dark[data-color-theme="royal"] {
+  --primary: 221 90% 65%;
+  --primary-foreground: 222 47% 6%;
+  --secondary: 215 25% 70%;
+  --secondary-foreground: 222 47% 6%;
+  --accent: 188 95% 55%;
+  --accent-foreground: 222 47% 6%;
+  --ring: 221 90% 65%;
+  --chart-1: 221 90% 65%;
+  --chart-2: 215 25% 70%;
+  --chart-3: 188 95% 55%;
+  --chart-4: 262 65% 68%;
+  --chart-5: 38 92% 58%;
+}
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100vh;
+    background:
+      linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.45) 48%, hsl(var(--background)) 100%);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: hsl(var(--surface-glass) / 0.72);
+    border: 1px solid hsl(var(--border) / 0.62);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(18px) saturate(1.18);
+  }
+  .glass-card {
+    position: relative;
+    background:
+      linear-gradient(145deg, hsl(var(--surface-raised) / 0.94), hsl(var(--surface) / 0.76));
+    border: 1px solid hsl(var(--border) / 0.7);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(22px) saturate(1.2);
+    transition:
+      transform 220ms var(--ease-premium),
+      border-color 220ms var(--ease-premium),
+      box-shadow 220ms var(--ease-premium);
+  }
+  .glass-card:hover {
+    border-color: hsl(var(--primary) / 0.24);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+  .glass-card1 {
+    background: hsl(var(--popover) / 0.94);
+    border: 1px solid hsl(var(--border) / 0.72);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(22px) saturate(1.2);
+  }
+  .glass-surface {
+    background: hsl(var(--surface) / 0.66);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: var(--shadow-xs);
+    backdrop-filter: blur(14px);
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)));
+  }
+  .text-gradient-alt {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--destructive)), hsl(var(--primary)));
+  }
+  .app-surface {
+    background:
+      linear-gradient(120deg, hsl(var(--primary) / 0.08), transparent 28%),
+      linear-gradient(310deg, hsl(var(--secondary) / 0.08), transparent 36%),
+      hsl(var(--background));
+  }
+  .premium-card {
+    @apply glass-card rounded-xl;
+    padding: var(--space-card);
+  }
+  .interactive-lift {
+    transition:
+      transform 220ms var(--ease-premium),
+      box-shadow 220ms var(--ease-premium);
+  }
+  .interactive-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+  .auth-grid {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.055) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to bottom, black, transparent 86%);
+  }
+  .auth-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      linear-gradient(115deg, hsl(var(--primary) / 0.1), transparent 30%),
+      linear-gradient(245deg, hsl(var(--secondary) / 0.1), transparent 34%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted) / 0.58));
+  }
+  .dark .auth-shell {
+    background:
+      linear-gradient(125deg, hsl(var(--primary) / 0.18), transparent 32%),
+      linear-gradient(250deg, hsl(var(--secondary) / 0.14), transparent 36%),
+      linear-gradient(180deg, hsl(222 48% 5%), hsl(var(--background)));
+  }
+  .auth-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.045) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: linear-gradient(120deg, black 0%, transparent 68%);
+  }
+  .auth-shell::after {
+    content: "";
+    position: absolute;
+    inset: auto 8% 5% auto;
+    width: min(46vw, 520px);
+    height: min(46vw, 520px);
+    pointer-events: none;
+    background:
+      conic-gradient(from 140deg, hsl(var(--primary) / 0.22), hsl(var(--secondary) / 0.12), transparent 42%, hsl(var(--accent) / 0.14), hsl(var(--primary) / 0.22));
+    filter: blur(70px);
+    opacity: 0.68;
+  }
+  .auth-frame {
+    position: relative;
+    z-index: 1;
+    width: min(1120px, calc(100% - 2rem));
+    border: 1px solid hsl(var(--border) / 0.78);
+    border-radius: 1.35rem;
+    background:
+      linear-gradient(145deg, hsl(var(--surface-raised) / 0.92), hsl(var(--surface) / 0.74));
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(24px) saturate(1.14);
+  }
+  .auth-brand-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background:
+      linear-gradient(145deg, hsl(var(--foreground)), hsl(var(--foreground) / 0.88));
+    color: hsl(var(--background));
+  }
+  .dark .auth-brand-panel {
+    background:
+      linear-gradient(145deg, hsl(var(--surface-raised)), hsl(222 44% 8%));
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--border) / 0.72);
+  }
+  .auth-brand-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, hsl(var(--primary) / 0.28), transparent 38%),
+      linear-gradient(315deg, hsl(var(--accent) / 0.16), transparent 46%);
+  }
+  .auth-card {
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--border) / 0.72);
+    background:
+      linear-gradient(180deg, hsl(var(--surface) / 0.96), hsl(var(--surface-raised) / 0.9));
+    box-shadow: var(--shadow-md);
+  }
+  .auth-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 999px;
+    border: 1px solid hsl(var(--border) / 0.72);
+    background: hsl(var(--surface) / 0.74);
+    padding: 0.4rem 0.7rem;
+    color: hsl(var(--muted-foreground));
+    box-shadow: var(--shadow-xs);
+  }
+  .auth-step {
+    border: 1px solid hsl(var(--border) / 0.68);
+    background: hsl(var(--muted) / 0.36);
+  }
+  .auth-step-active {
+    border-color: hsl(var(--primary) / 0.42);
+    background: hsl(var(--primary) / 0.12);
+    color: hsl(var(--primary));
+    box-shadow: var(--shadow-sm);
+  }
+  .bg-gradient-radial {
+    background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom scrollbar for light/dark */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}

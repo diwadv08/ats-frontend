@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# production
+build/
+
+# env
+.env*
+!.env.example
+
+# logs
+*.log
+
+# typescript
+*.tsbuildinfo
+
+# cache
+.eslintcache
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
